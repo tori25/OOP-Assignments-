@@ -1,9 +1,9 @@
 # CS611-Assignment < # >
 ## <Slide Puzzle>
 ---------------------------------------------------------------------------
-- Name: Vera Mezhvynskiy
+- Name: Vera M.
 - Email:veramezh@bu.edu
-- Student ID: U47635942
+- Student ID: ******
 
 ## Files
 ---------------------------------------------------------------------------
