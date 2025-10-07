@@ -1,9 +1,11 @@
 # CS611-Assignment < # >
 ## <Slide Puzzle>
 ---------------------------------------------------------------------------
-- Name: Vera M.
-- Email:veramezh@bu.edu
-- Student ID: ******
+- Student 1: Vera Mezhvynskiy
+- Email: veramezh@bu.edu
+
+- Student 2: Adithya Darshan Nayak
+- Email: adithyad@bu.edu
 
 ## Files
 ---------------------------------------------------------------------------
@@ -38,8 +40,8 @@ In my opinion, these are the most important components of the game at this stage
 ## How to compile and run
 ---------------------------------------------------------------------------
 1. Navigate to the directory "src" after unzipping the VeraMezhvynskiyGame files
-2. Run: javac Game.java
-3. Run: java Game
+2. Run: javac Main.java
+3. Run: java Main
 4. Play the Game
 
 
