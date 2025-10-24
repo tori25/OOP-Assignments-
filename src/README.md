@@ -1,18 +1,21 @@
 # CS611-Assignment < #2 >
 ## <Dots and Boxes>
 ---------------------------------------------------------------------------
-- Student 1: Vera Mezhvynskiy 
-- Email: veramezh@bu.edu
-
-- Student 2: Adithya Darshan Nayak
-- Email: adithyad@bu.edu
-
 - Student 1: Vera Mezhvynskiy
 - Email: veramezh@bu.edu
 
 - Student 2: Adithya Darshan Nayak
 - Email: adithyad@bu.edu
 
+<<<<<<< HEAD
+- Student 1: Vera Mezhvynskiy
+- Email: veramezh@bu.edu
+
+- Student 2: Adithya Darshan Nayak
+- Email: adithyad@bu.edu
+
+=======
+>>>>>>> 45fa342 (Recomited the empty files)
 ## Files
 ---------------------------------------------------------------------------
 Game.java – This is the abstract Game class from which concrete game classes are created.

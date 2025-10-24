@@ -1,104 +1,27 @@
-class Board {
-    int n; // cols
-    int m; // rows
-    int [][] board;
-    int emptyRow;
-    int emptyCol;
+// Base board class. PuzzleBoard and DotBoxBoard inherit from this.
+abstract class Board {
+     int rows, cols;
+    protected Space[][] spaces;
 
-    public void setSize(int rows, int cols) {
-        m = rows;
-        n = cols;
-        board = new int[m][n];
+    public Board(int rows, int cols) {
+        this.rows = rows;
+        this.cols = cols;
+        spaces = new Space[rows][cols];
     }
 
-    public void getSize(InputHandler inputHandler) {
-        int[] size = inputHandler.getBoardSize("Puzzle size (rows, cols): ");
-        setSize(size[0], size[1]);
+    public abstract void initBoard();
+    public abstract void printBoard();
+    public abstract void getSize(InputHandler inputHandler);
+
+
+    public abstract void shuffleBoard();
+    public abstract boolean moveTile(int value);
+
+    public int getRows() {
+        return rows;
     }
 
-    public void initBoard () {
-        int counter = 1;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                board[i][j] = counter++;
-            }
-        }
-        board[m-1][n-1] = 0; // make last cell empty
-        emptyRow = m - 1;
-        emptyCol = n - 1;
+    public int getCols() {
+        return cols;
     }
-
-    public void shuffleBoard() {
-        int rowLen = board.length;
-        int colLen = board[0].length;
-
-        for (int i = 0; i < rowLen; i++) {
-            for (int j = 0; j < colLen; j++) {
-                int randRow = (int)(Math.random() * rowLen);
-                int randCol = (int)(Math.random() * colLen);
-
-                int temp = board[i][j];
-                board[i][j] = board[randRow][randCol];
-                board[randRow][randCol] = temp;
-            }
-        }
-        findEmptyCell();
-    }
-
-    public void printBoard() {
-        StringBuilder border = new StringBuilder("+");
-        for (int k = 0; k < n; k++) border.append("__+");
-
-        for (int i = 0; i < m; i++) {
-            System.out.println(border);
-            StringBuilder row = new StringBuilder("|");
-            for (int j = 0; j < n; j++) {
-                String cell = (board[i][j] == 0) ? "  " : String.format("%2d", board[i][j]);
-                row.append(cell).append("|");
-            }
-            System.out.println(row);
-        }
-        System.out.println(border);
-    }
-
-    public void findEmptyCell() {
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (board[i][j] == 0) {
-                    emptyRow = i;
-                    emptyCol = j;
-                }
-            }
-        }
-    }
-
-    boolean moveTile(int value) {
-        if (value == 0) return false; // if value ==  quit
-
-        // find tile
-        int tileRow = -1, tileCol = -1;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (board[i][j] == value) {
-                    tileRow = i;
-                    tileCol = j;
-                }
-            }
-        }
-
-        // check adjacency
-        if ((Math.abs(tileRow - emptyRow) == 1 && tileCol == emptyCol) ||
-                (Math.abs(tileCol - emptyCol) == 1 && tileRow == emptyRow)) {
-            // swap
-            board[emptyRow][emptyCol] = value;
-            board[tileRow][tileCol] = 0;
-            emptyRow = tileRow;
-            emptyCol = tileCol;
-            return true;
-        } else {
-            System.out.println("Invalid move! Try again.");
-            return false;
-        }
-    }
-
 }
