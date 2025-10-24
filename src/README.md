@@ -1,12 +1,11 @@
 # CS611-Assignment < #2 >
 ## <Dots and Boxes>
 ---------------------------------------------------------------------------
-- Student 1: Vera Mezhvynskiy 
+- Student 1: Vera Mezhvynskiy
 - Email: veramezh@bu.edu
 
 - Student 2: Adithya Darshan Nayak
 - Email: adithyad@bu.edu
-
 
 ## Files
 ---------------------------------------------------------------------------
@@ -55,8 +54,8 @@ The Piece class is an abstract base for all game pieces, and PuzzlePiece is its 
 ## How to compile and run
 ---------------------------------------------------------------------------
 1. Navigate to the directory "src" after unzipping the VeraMezhvynskiyGame files
-2. Run: javac Game.java
-3. Run: java Game
+2. Run: javac Main.java
+3. Run: java Main
 4. Play the Game
 
 

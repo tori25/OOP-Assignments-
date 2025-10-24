@@ -1,41 +1,19 @@
+// Base abstract class for all games. Concrete classes extend Game
 import java.util.Scanner;
 
-class Game{
-    Player player;
-    Board board;
-    Scanner scanner;
-    InputHandler inputHandler;
+abstract class Game {
+    protected Board board;
+    protected Player player;
+    protected Scanner scanner;
+    protected InputHandler inputHandler;
 
-    Game() {
+    Game() { //Game constructor
         scanner = new Scanner(System.in);
         inputHandler = new InputHandler(scanner);
         player = new Player();
-        board = new Board();
     }
 
+    abstract void start();
 
-    void start() {
-        player.initPlayer(inputHandler);
-        board.getSize(inputHandler);
-        board.initBoard();
-        board.shuffleBoard();
-
-        while (true) {
-            board.printBoard();
-            int move = inputHandler.getInt("Enter the tile number to move (or 0 to quit): ");
-            if (move == 0) {
-                System.out.println("Goodbye, " + player.name + "!");
-                break;
-            }
-            board.moveTile(move);
-
-        }
-
-        scanner.close();
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.start();
-    }
+    abstract void initPlayer();
 }
