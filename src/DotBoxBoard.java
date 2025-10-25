@@ -1,5 +1,4 @@
 // This class implements the Board interface for the DotBox game.
-// This class implements the Board interface for the DotBox game.
 class DotBoxBoard implements Board {
     private int rows, cols;
     private Space[][] spaces;

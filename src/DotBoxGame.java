@@ -25,7 +25,7 @@ class DotBoxGame extends Game {
 
         printHelp();
 
-        // --- Main game loop ---
+        // Main game loop
         while (true) {
             board.printBoard();
             System.out.println("Score: " + player.name + "=" + scores[0] +

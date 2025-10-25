@@ -1,5 +1,5 @@
-# CS611-Assignment < #2 >
-## <Dots and Boxes>
+# CS611-Assignment < #3 >
+## <Quoridor Game>
 ---------------------------------------------------------------------------
 - Student 1: Vera Mezhvynskiy
 - Email: veramezh@bu.edu
@@ -9,43 +9,71 @@
 
 ## Files
 ---------------------------------------------------------------------------
-Game.java – This is the abstract Game class from which concrete game classes are created.
-            It defines the common structure and behavior shared by all games.
+Game.java – Abstract base class defining the core structure and behavior shared by all games.
+        Initializes shared components — Scanner, InputHandler, and a Player instance — providing a common foundation for all subclasses.
 
-Main.java – The entry point of the program; responsible for starting the selected game.
+Main.java – Entry point of the application. Displays the welcome menu, lets the user choose which game to play, and launches the corresponding game.
 
-PuzzleGame.java – Concrete class for the Puzzle Game, inheriting from Game.
+Board.java – Abstract class defining the blueprint for all game boards (initBoard, printBoard, etc.).
+        Each game (Puzzle, DotBox, Quoridor) provides its own concrete implementation.
+        The Game class has a composition relationship with Board (a Game has-a Board).
 
-DotBoxGame.java – Concrete class for the Dots and Boxes Game, inheriting from Game.
+PuzzleGame.java – Concrete implementation of the classic sliding Puzzle Game.
+        Extends Game, uses PuzzleBoard and PuzzlePiece, and manages player moves and victory conditions.
 
-Board.java – Abstract class defining a generic game board.
-            Other board types (like PuzzleBoard or DotBoxBoard) inherit from it.
-            Board is also a has-a relationship to the abstract Game class.
+PuzzleBoard.java – Implements Board for the Puzzle Game.
+        Handles tile movement, shuffle logic, and empty-space tracking.
 
-PuzzleBoard.java – The specific board implementation for the Puzzle Game, extending Board.
+DotBoxGame.java – Concrete implementation of the Dots and Boxes Game.
+        Extends Game, supports two-player mode, uses DotBoxBoard, and implements scoring and edge-claiming logic.
 
-DotBoxBoard.java – The specific board implementation for the Dots and Boxes Game, extending Board.
+DotBoxBoard.java – Implements Board for the Dots and Boxes Game.
+        Manages the grid, edges, and completed boxes for each player.
 
-Player.java – Represents the player in a game.
-               Each game has-a player instance (or two players in the Dots and Boxes game).
+QuoridorGame.java – Concrete implementation of the Quoridor board game.
+        Extends Game, manages two players (QuoridorPlayer), pawns, walls, and victory detection based on reaching the goal line.
 
-Piece.java – Abstract class representing a generic piece that can be placed on a space.
+QuoridorBoard.java – Implements Board for the Quoridor Game.
+        Manages spaces, wall placement, and movement validation.
 
-PuzzlePiece.java – Concrete implementation of Piece used in the Puzzle Game.
+Player.java – Represents a game player with a name and score.
+    Used directly in the Puzzle and DotBox games. Quoridor Player extends this class. 
 
-Space.java – Represents a single cell (or square) on a game board.
+QuoridorPlayer.java – Specialized subclass of Player with Pawn, GoalLine, and wallsRemaining fields specific to Quoridor.
 
-InputHandler.java – Handles all user input and validation for both games.
+Piece.java – Abstract base class for any movable or placeable piece on a board.
+PuzzlePiece.java – Concrete implementation used in the Puzzle Game.
+
+Space.java – Represents a single cell or coordinate on any game board.
+PuzzleSpace.java – Specialized Space for the Puzzle Game.
+
+Coordinate.java – Represents a row/column position on the board.
+GoalLine.java – Represents the target line a pawn must reach in Quoridor.
+Pawn.java – Represents a player’s pawn in the Quoridor Game.
+Wall.java – Represents a placed wall in Quoridor.
+Square.java – Utility class for Quoridor grid representation.
+Orientation.java – Enum defining horizontal/vertical wall orientation.
+
+InputHandler.java – Handles playerS input and input validation for all three games.
 
 ## Notes
 ---------------------------------------------------------------------------
-My program has three abstract classes: Game, Board, and Piece.
-From the abstract class Game, I have two subclasses: PuzzleGame and DotBoxGame.
-The Board class also has two subclasses: PuzzleBoard and DotBoxBoard.
-The Piece class is an abstract base for all game pieces, and PuzzlePiece is its concrete implementation for the puzzle game.
+The program contains three abstract classes: Game, Board, and Piece.
+From the abstract class Game, I have three subclasses: PuzzleGame, DotBoxGame, and QuoridorGame.
+The Board class also has three subclasses: PuzzleBoard, DotBoxBoard, and QuoridorBoard.
+The Piece class serves as an abstract base for all game pieces, and PuzzlePiece is its concrete implementation for the puzzle game.
+For the Quoridor game, I followed the same structure and added the concrete classes QuoridorGame, QuoridorBoard, and QuoridorPlayer.
+These classes inherit from their corresponding superclasses.
+Additionally, I used several helper classes—Wall, Square, Pawn, and GameState—to handle the specific details of the Quoridor game.
+Object-Oriented Design Highlights
+Encapsulation and inheritance are applied consistently throughout the program.
+All three games share a unified structure built on the Game and Board abstractions.
+Input is handled and validated through the InputHandler class, ensuring safe and consistent user interaction.
+The program uses both composition (has-a relationships) and inheritance to achieve modularity and reusability.
+Each major component is encapsulated within its own class, adhering to the Single Responsibility Principle.
 
-•	I used encapsulation and inheritance throughout the program.
-•	Both games share a similar structure built on the Game and Board abstractions.
+•	I used encapsulation and inheritance throughout the whole program.
+•	All three games share a similar structure built on the Game and Board abstractions.
 •	Input is handled and validated through InputHandler, ensuring safe and consistent user interaction.
 •	The program uses composition (has-a relationships) and inheritance to achieve modular and reusable design.
 •	Each main component of the program is separated into its own class, following the single responsibility principle.
@@ -72,7 +100,8 @@ If the user choose 1!
 5. If the player enters a string: Please enter a valid integer. 
 6. If the player enters 0, show: Goodbye, [player.name]!
 
- If the user choose 2!
+If the user choose 2! - Dots and Boxes Game 
+
 1. Dots & Boxes!
    Hello! Welcome to Puzzle Game!
    What's your name?
@@ -93,6 +122,4 @@ If the user choose 1!
    Final Score:
    Congrats [player.name] !
 9. If no one won: It's a tie!
-
-```
 

@@ -1,11 +1,11 @@
-// This class implements the Board interface and is optimized for the Puzzle game.
-// This class implements the Board interface and is optimized for the Puzzle game.
+// Board implementation for the sliding puzzle game
 class PuzzleBoard implements Board {
-    private int rows, cols;
-    private Space[][] spaces;
+    private int rows, cols;      // Board dimensions
+    private Space[][] spaces;    // 2D grid of spaces holding puzzle pieces
     private int emptyRow;
     private int emptyCol;
 
+    // Create a new puzzle board with specified dimensions
     public PuzzleBoard(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
@@ -13,12 +13,14 @@ class PuzzleBoard implements Board {
         initBoard();
     }
 
+    // Update board size (used when user wants different dimensions)
     public void setSize(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
         this.spaces = new Space[rows][cols];
     }
 
+    // Fill board with numbered tiles
     @Override
     public void initBoard() {
         int counter = 1;
@@ -27,14 +29,16 @@ class PuzzleBoard implements Board {
                 spaces[i][j] = new PuzzleSpace(i, j, new PuzzlePiece(null, counter++));
             }
         }
-        // last cell empty
+        // Make last cell empty
         ((PuzzleSpace) spaces[rows - 1][cols - 1]).setPiece(null);
         emptyRow = rows - 1;
         emptyCol = cols - 1;
     }
 
+    // Display the puzzle board with borders and tile numbers
     @Override
     public void printBoard() {
+        // Create top/bottom border (e.g., "+__+__+__+")
         StringBuilder border = new StringBuilder("+");
         for (int k = 0; k < cols; k++) border.append("__+");
 
@@ -46,9 +50,9 @@ class PuzzleBoard implements Board {
 
                 String cell;
                 if (piece == null) {
-                    cell = "  ";
+                    cell = "  ";  // Empty space shows as blank
                 } else {
-                    cell = String.format("%2d", piece.getValue());
+                    cell = String.format("%2d", piece.getValue());  // Show tile number
                 }
 
                 row.append(cell).append("|");
@@ -58,6 +62,7 @@ class PuzzleBoard implements Board {
         System.out.println(border);
     }
 
+    // Get board size from user input
     @Override
     public void getSize(InputHandler inputHandler) {
         int[] size = inputHandler.getBoardSize("Puzzle size (rows, cols): ");
@@ -65,10 +70,12 @@ class PuzzleBoard implements Board {
         initBoard();
     }
 
+    // Swapping pieces randomly
     @Override
     public void shuffleBoard() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
+                // Pick random position and swap
                 int r = (int) (Math.random() * rows);
                 int c = (int) (Math.random() * cols);
                 Piece tmp = spaces[i][j].getPiece();
@@ -77,7 +84,7 @@ class PuzzleBoard implements Board {
             }
         }
 
-        // ✅ find empty cell after shuffle
+        // Find where the empty space ended up after shuffling
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (spaces[i][j].getPiece() == null) {
@@ -89,11 +96,12 @@ class PuzzleBoard implements Board {
         }
     }
 
+    // Move a tile into the empty space, true if successful, false otherwise
     @Override
     public boolean moveTile(int value) {
-        if (value == 0) return false; // quit signal
+        if (value == 0) return false; // 0 means quit, don't move anything
 
-        // find tile coordinates
+        // Search for the tile with this value
         int tileRow = -1, tileCol = -1;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -105,32 +113,32 @@ class PuzzleBoard implements Board {
             }
         }
 
-        // tile not found
+        // Tile not found on the board
         if (tileRow == -1) {
             System.out.println("Tile not found!");
             return false;
         }
 
-        // check adjacency to empty cell
+        // Check if tile is adjacent to the empty space
         if ((Math.abs(tileRow - emptyRow) == 1 && tileCol == emptyCol) ||
                 (Math.abs(tileCol - emptyCol) == 1 && tileRow == emptyRow)) {
 
-            // swap tile with empty
+            // Swap tile with empty space
             spaces[emptyRow][emptyCol].setPiece(spaces[tileRow][tileCol].getPiece());
             spaces[tileRow][tileCol].setPiece(null);
 
-            // update empty cell location
+            // Update empty space location
             emptyRow = tileRow;
             emptyCol = tileCol;
 
-            return true;
+            return true; // Move successful
         } else {
             System.out.println("Invalid move! Try again.");
             return false;
         }
     }
 
-    // --- Required getters for interface compatibility ---
+    // Getter methods required by Board interface
     public int getRows() {
         return rows;
     }

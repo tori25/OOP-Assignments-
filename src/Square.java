@@ -1,13 +1,33 @@
+// Represents a single cell on the board that can hold a piece
 public class Square extends Space {
-    private Pawn occupant;
+    private QuoridorPiece occupant; // The piece currently on this square (null if empty)
 
+    // Create a square at a specific position
     public Square(int row, int col) {
-        super(row, col);
+        super(row, col); // Initialize the coordinate in the parent Space class
     }
 
-    public boolean isOccupied() { return occupant != null; }
+    // Check if there's a piece on this square
+    public boolean isOccupied() {
+        return occupant != null;
+    }
 
-    public void setOccupant(Pawn pawn) { this.occupant = pawn; }
+    // Place a piece on this square
+    public void setOccupant(QuoridorPiece piece) {
+        this.occupant = piece;
+    }
 
-    public Pawn getOccupant() { return occupant; }
+    // Get the piece currently on this square
+    public QuoridorPiece getOccupant() {
+        return occupant;
+    }
+
+    // Visual representation for displaying the square
+    @Override
+    public String toString() {
+        if (isOccupied()) {
+            return "[P]"; // Show P if a pawn is here
+        }
+        return "[ ]"; // Show empty brackets for empty square
+    }
 }

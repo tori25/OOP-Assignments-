@@ -1,15 +1,15 @@
-// Helper class for validating user input and output.
+// Helper class for validating and handling all user input throughout the games
 import java.util.Scanner;
 
 public class InputHandler {
-    private final Scanner scanner;
+    private final Scanner scanner;  // Scanner for reading console input
 
+    // Create an input handler with the provided scanner
     public InputHandler(Scanner scanner) {
         this.scanner = scanner;
     }
 
-
-    // Verifies that the user input is an integer; allows 'q' to quit.
+    // Get a valid integer from user, allowing 'q' to quit
     public int getInt(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -18,18 +18,18 @@ public class InputHandler {
             // Check if user wants to quit
             if (input.equalsIgnoreCase("q")) {
                 System.out.println("Exiting the game. Goodbye!");
-                System.exit(0); // cleanly terminate program
+                System.exit(0); // Cleanly terminate program
             }
 
             try {
-                return Integer.parseInt(input); // valid integer
+                return Integer.parseInt(input); // Try to parse as integer
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a valid number (or 'q' to quit).");
             }
         }
     }
 
-    // Verifies that the user entered a name and didn't leave it empty
+    // Get a non-empty player name from user
     public String getPlayerName(String prompt) {
         while (true) {
             System.out.print(prompt);
@@ -42,12 +42,13 @@ public class InputHandler {
         }
     }
 
-    //Validating board size (rows, cols) input from user
+    // Get valid board dimensions (rows and columns) from user
     public int[] getBoardSize(String prompt) {
         while (true) {
             System.out.print(prompt);
             String line = scanner.nextLine();
-            String[] parts = line.trim().split("\\s+|,|;");
+            String[] parts = line.trim().split("\\s+|,|;");  // Split on space, comma, or semicolon
+
             if (parts.length >= 2) {
                 try {
                     int rows = Integer.parseInt(parts[0]);
@@ -66,20 +67,21 @@ public class InputHandler {
         }
     }
 
+    // Get text from user
     public String getLine(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine();
     }
 
-    // Handles and validates a move command for the DotBox game
+    // Get and validate a move for DotBox game (row, col, direction)
     public Object[] getDotBoxMove(Board board) {
         while (true) {
             String cmd = getLine("Command (h for help): ").trim();
 
-            if (cmd.equalsIgnoreCase("q")) return new Object[]{"q"}; // quit
-            if (cmd.equalsIgnoreCase("h")) return new Object[]{"h"}; // help
+            if (cmd.equalsIgnoreCase("q")) return new Object[]{"q"}; // Quit command
+            if (cmd.equalsIgnoreCase("h")) return new Object[]{"h"}; // Help command
 
-            // Accept formats: "r c d" or "r,c,d" where d in H/V
+            // Accept formats: "r c d" or "r,c,d" where d is H (horizontal) or V (vertical)
             String[] parts = cmd.split("\\s+|,");
             if (parts.length != 3) {
                 System.out.println("Invalid format. Use: r c d (d is H or V). Type 'h' for help.");
@@ -91,13 +93,15 @@ public class InputHandler {
                 int c = Integer.parseInt(parts[1]);
                 char d = Character.toUpperCase(parts[2].trim().charAt(0));
 
-                // Range validation depending on direction
+                // Validate range based on direction
                 if (d == 'H') {
+                    // Horizontal edge validation
                     if (r < 0 || r > board.getRows() || c < 0 || c >= board.getCols()) {
                         System.out.println("Out of range for H edge. r in [0," + board.getRows() + "], c in [0," + (board.getCols() - 1) + "]");
                         continue;
                     }
                 } else if (d == 'V') {
+                    // Vertical edge validation
                     if (r < 0 || r >= board.getRows() || c < 0 || c > board.getCols()) {
                         System.out.println("Out of range for V edge. r in [0," + (board.getRows() - 1) + "], c in [0," + board.getCols() + "]");
                         continue;
@@ -107,7 +111,7 @@ public class InputHandler {
                     continue;
                 }
 
-                // Valid move
+                // Valid move - return the coordinates and direction
                 return new Object[]{r, c, d};
 
             } catch (Exception e) {
@@ -116,13 +120,13 @@ public class InputHandler {
         }
     }
 
-    // Get an action command (like Move or Wall)
+    // Get an action command from user (e.g., "M" for move, "W" for wall)
     public String getAction(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine().trim();
     }
 
-    // Get a direction input (H/V) for wall placement
+    // Get a direction input (H for horizontal or V for vertical) for wall placement
     public String getDirection(String prompt) {
         while (true) {
             System.out.print(prompt);
